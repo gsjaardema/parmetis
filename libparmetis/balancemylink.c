@@ -15,11 +15,11 @@
 #define	PE	0
 
 /*************************************************************************
-* This function performs an edge-based FM refinement
-**************************************************************************/
+ * This function performs an edge-based FM refinement
+ **************************************************************************/
 idx_t BalanceMyLink(ctrl_t *ctrl, graph_t *graph, idx_t *home, idx_t me,
-          idx_t you, real_t *flows, real_t maxdiff, real_t *diff_cost, 
-          real_t *diff_lbavg, real_t avgvwgt)
+		    idx_t you, real_t *flows, real_t maxdiff, real_t *diff_cost, 
+		    real_t *diff_lbavg, real_t avgvwgt)
 {
   idx_t h, i, ii, j, k, mype;
   idx_t nvtxs, ncon;
@@ -183,7 +183,7 @@ idx_t BalanceMyLink(ctrl_t *ctrl, graph_t *graph, idx_t *home, idx_t me,
     for (ii=0; ii<nvtxs/2; ii++) {
       from = -1;
       Mc_DynamicSelectQueue(ctrl, nqueues, ncon, me, you, inq, flows, 
-          &from, &qnum, minval, avgvwgt, maxdiff);
+			    &from, &qnum, minval, avgvwgt, maxdiff);
 
       /* can't find a vertex in one subdomain, try the other */
       if (from != -1 && qnum == -1) {
@@ -204,7 +204,7 @@ idx_t BalanceMyLink(ctrl_t *ctrl, graph_t *graph, idx_t *home, idx_t me,
 
         if (j != ncon)
           Mc_DynamicSelectQueue(ctrl, nqueues, ncon, me, you, inq, flows, 
-              &from, &qnum, minval, avgvwgt, maxdiff);
+				&from, &qnum, minval, avgvwgt, maxdiff);
       }
 
       if (qnum == -1)
@@ -262,7 +262,7 @@ idx_t BalanceMyLink(ctrl_t *ctrl, graph_t *graph, idx_t *home, idx_t me,
           }
 
           rpqUpdate(queues[hval[edge]+(nqueues*myqueue[edge])], 
-              map[edge]-ptr[hval[edge]], newgain);
+		    map[edge]-ptr[hval[edge]], newgain);
         }
       }
     }
@@ -277,7 +277,7 @@ idx_t BalanceMyLink(ctrl_t *ctrl, graph_t *graph, idx_t *home, idx_t me,
       from = where[vtx];
       where[vtx] = to = (from == me) ? you : me;
 
-     gk_SWAP(id[vtx], ed[vtx], tmp);
+      gk_SWAP(id[vtx], ed[vtx], tmp);
       for (j=xadj[vtx]; j<xadj[vtx+1]; j++) {
         edge = adjncy[j];
         tmp = (to == where[edge] ? adjwgt[j] : -adjwgt[j]);
@@ -324,10 +324,10 @@ idx_t BalanceMyLink(ctrl_t *ctrl, graph_t *graph, idx_t *home, idx_t me,
     if (where[i] != home[i])
       totalv += vsize[i];
 
-      for (j=xadj[i]; j<xadj[i+1]; j++) {
-        if (where[adjncy[j]] != where[i])
-          cut += adjwgt[j];
-      }
+    for (j=xadj[i]; j<xadj[i+1]; j++) {
+      if (where[adjncy[j]] != where[i])
+	cut += adjwgt[j];
+    }
   }
   cut /= 2;
   mycost = cut*ipc_factor + totalv*redist_factor;
