@@ -20,13 +20,12 @@
 
 #include <parmetis.h>
 
-#include "../metis/libmetis/gklib_defs.h"
+#include <gklib_defs.h>
 
-#include <mpi.h> 
+#include <mpi.h>
 
 #include <rename.h>
 #include <defs.h>
 #include <struct.h>
 #include <macros.h>
 #include <proto.h>
-
